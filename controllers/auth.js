@@ -1,5 +1,3 @@
-require('dotenv').config()
-
 const crypto = require('crypto');
 
 const bcrypt = require('bcryptjs');
@@ -12,7 +10,7 @@ const User = require('../models/user');
 const transporter = nodemailer.createTransport(
   sendgridTransport({
     auth: {
-      api_key: process.env.SENDGRID_API_KEY 
+      api_key: "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"
       }
   })
 );
@@ -210,7 +208,7 @@ exports.postReset = (req, res, next) => {
         res.redirect('/');
         transporter.sendMail({
           to: req.body.email,
-          from: 'shop@node-complete.com',
+          from: 'robinrodrigues6499@gmail.com',
           subject: 'Password reset',
           html: `
             <p>You requested a password reset</p>
