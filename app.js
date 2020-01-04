@@ -45,6 +45,7 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
+console.log("Hi");
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
