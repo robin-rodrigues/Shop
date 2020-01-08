@@ -45,7 +45,6 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-console.log("Hi");
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -54,6 +53,7 @@ const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
 
+console.log("Products");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
   multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')
