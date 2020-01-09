@@ -19,7 +19,7 @@ const User = require('./models/user');
 
 const app = express();
 const store = new MongoDBStore({
-  uri: process.env.CLOUD_MONGODB_PATH,
+  uri: "mongodb+srv://robin:NfokFKb9SGnBHnBv@cluster0-dy75c.mongodb.net/test?retryWrites=true&w=majority",
   collection: 'sessions'
 });
 const csrfProtection = csrf();
@@ -121,7 +121,7 @@ app.use((error, req, res, next) => {
 
 
 mongoose
-  .connect(process.env.CLOUD_MONGODB_PATH,{useNewUrlParser: true, useUnifiedTopology: true})
+  .connect("mongodb+srv://robin:NfokFKb9SGnBHnBv@cluster0-dy75c.mongodb.net/test?retryWrites=true&w=majority",{useNewUrlParser: true, useUnifiedTopology: true})
   .then(result => {
     app.listen(3000);
   })
