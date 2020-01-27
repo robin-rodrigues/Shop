@@ -2,12 +2,12 @@ const fs = require('fs');
 const path = require('path');
 
 const PDFDocument = require('pdfkit');
-const stripe = require('stripe')(process.env.SECRET_STRIPE_KEY);
+const stripe = require('stripe')('sk_test_OaqA2gnJgKuAB9KWVsxQgDFt007w4zSW2b');
 
 const Product = require('../models/product');
 const Order = require('../models/order');
 
-const ITEMS_PER_PAGE = 4;
+const ITEMS_PER_PAGE = 2;
 
 exports.getProducts = (req, res, next) => {
   const page = +req.query.page || 1;
@@ -193,7 +193,7 @@ exports.postOrder = (req, res, next) => {
     .then(result => {
       const charge = stripe.charges.create({
         amount: totalSum * 100,
-        currency: 'usd',
+        currency: 'inr',
         description: 'Demo Order',
         source: token,
         metadata: { order_id: result._id.toString() }

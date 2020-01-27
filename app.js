@@ -19,7 +19,7 @@ const User = require('./models/user');
 
 const app = express();
 const store = new MongoDBStore({
-  uri: "mongodb+srv://robin:NfokFKb9SGnBHnBv@cluster0-dy75c.mongodb.net/test?retryWrites=true&w=majority",
+  uri: process.env.CLOUD_MONGODB_PATH,
   collection: 'sessions'
 });
 const csrfProtection = csrf();
@@ -53,7 +53,6 @@ const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
 
-console.log("Products");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
   multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')
@@ -122,7 +121,7 @@ app.use((error, req, res, next) => {
 
 
 mongoose
-  .connect("mongodb+srv://robin:NfokFKb9SGnBHnBv@cluster0-dy75c.mongodb.net/test?retryWrites=true&w=majority",{useNewUrlParser: true, useUnifiedTopology: true})
+  .connect(process.env.CLOUD_MONGODB_PATH,{useNewUrlParser: true, useUnifiedTopology: true})
   .then(result => {
     app.listen(3000);
   })

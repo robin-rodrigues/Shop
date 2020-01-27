@@ -1,234 +1,41 @@
-
-<div class="top-bar">
-    <div class="content-topbar flex-sb-m h-full container">
-        <div class="left-top-bar">
-            Free shipping for standard order over 500
-        </div>
-        <div class="left-top-bar">
-            Over 5 million+ happy customers
-        </div>
-        <div class="right-top-bar flex-w h-full">
-            <a href="/about" class="flex-c-m trans-04 p-lr-25">
-                About
-            </a>
-
-            <a href="/contact" class="flex-c-m trans-04 p-lr-25">
-                Contact us
-            </a>
-
-            <a href="/orders" class="flex-c-m trans-04 p-lr-25">
-                Your Orders
-            </a>
-        </div>
-    </div>
-</div>
-<div class="wrap-menu-desktop">
-            <nav class="limiter-menu-desktop mr-4 ml-4">					
-                <a href="/" style="font-size: 33px;color:black" class="mr-3">IndiaTribes</a>
-                <div class="menu-desktop">
-                    
-                    <ul class="main-menu">
-                        <li class="main-header__item">
-                            <a class="<%= path === '/products' ? 'active' : '' %>" href="/products" style="font-size: 18px;">Products</a>
-                        </li>
-                        <% if (isAuthenticated) { %>
-                        <li>
-                            <a href="/admin/add-product" style="font-size: 18px;">Add Products</a>
-                        </li>
-
-                        <li>
-                            <a href="/admin/products" style="font-size: 18px;">Admin</a>
-                        </li>
-                        <% } %>
-                        <li class="nav-item dropdown megamenu"><a id="megamneu" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" 
-                            class="nav-link dropdown-toggle font-weight-bold text-uppercase" style="font-size: 18px;">Categories</a>
-                            <div aria-labelledby="megamneu" class="dropdown-menu border-0 p-0 m-0">
-                              <div class="container rounded border border-primary">
-                                      <div class="row bg-white rounded shadow-sm p-3">
-                                        <div class="col-lg-3 mb-3">
-                                          <h6 class="font-weight-bold text-uppercase">Tribes Heritage</h6>
-                                          <ul class="list-unstyled">
-                                            <li class="nav-item row"><a href="" class="nav-link text-small pb-0">Unique Features</a></li>
-                                            <li class="nav-item row"><a href="" class="nav-link text-small pb-0 ">Image Responsive</a></li>
-                                            <li class="nav-item row"><a href="" class="nav-link text-small pb-0 ">Auto Carousel</a></li>
-                                            <li class="nav-item row"><a href="" class="nav-link text-small pb-0 ">Newsletter Form</a></li>
-                                          </ul>
-                                        </div>
-                                        <div class="col-lg-3 mb-3">
-                                          <h6 class="font-weight-bold text-uppercase">Women</h6>
-                                          <ul class="list-unstyled">
-                                            <li class="nav-item row"><a href="" class="nav-link text-small pb-0 ">Unique Features</a></li>
-                                            <li class="nav-item row"><a href="" class="nav-link text-small pb-0 ">Image Responsive</a></li>
-                                            <li class="nav-item row"><a href="" class="nav-link text-small pb-0 ">Auto Carousel</a></li>
-                                            <li class="nav-item row"><a href="" class="nav-link text-small pb-0 ">Newsletter Form</a></li>
-                                          </ul>
-                                        </div>
-                                        <div class="col-lg-3 mb-3">
-                                          <h6 class="font-weight-bold text-uppercase">Men</h6>
-                                          <ul class="list-unstyled">
-                                            <li class="nav-item row"><a href="" class="nav-link text-small pb-0 ">Unique Features</a></li>
-                                            <li class="nav-item row"><a href="" class="nav-link text-small pb-0 ">Image Responsive</a></li>
-                                            <li class="nav-item row"><a href="" class="nav-link text-small pb-0 ">Auto Carousel</a></li>
-                                            <li class="nav-item row"><a href="" class="nav-link text-small pb-0 ">Newsletter Form</a></li>
-                                          </ul>
-                                        </div>
-                                        <div class="col-lg-3 mb-3">
-                                          <h6 class="font-weight-bold text-uppercase">Jewellery</h6>
-                                          <ul class="list-unstyled">
-                                            <li class="nav-item row"><a href="" class="nav-link text-small pb-0 ">Unique Features</a></li>
-                                            <li class="nav-item row"><a href="" class="nav-link text-small pb-0 ">Image Responsive</a></li>
-                                            <li class="nav-item row"><a href="" class="nav-link text-small pb-0 ">Auto Carousel</a></li>
-                                            <li class="nav-item row"><a href="" class="nav-link text-small pb-0 ">Newsletter Form</a></li>
-                                          </ul>
-                                        </div>
-                                      </div>
-                                      <div class="row bg-white rounded shadow-sm p-3">
-                                        <div class="col-lg-3 mb-3">
-                                            <h6 class="font-weight-bold text-uppercase">Paintings</h6>
-                                            <ul class="list-unstyled">
-                                              <li class="nav-item row"><a href="" class="nav-link text-small pb-0">Unique Features</a></li>
-                                              <li class="nav-item row"><a href="" class="nav-link text-small pb-0 ">Image Responsive</a></li>
-                                              <li class="nav-item row"><a href="" class="nav-link text-small pb-0 ">Auto Carousel</a></li>
-                                              <li class="nav-item row"><a href="" class="nav-link text-small pb-0 ">Newsletter Form</a></li>
-                                            </ul>
-                                          </div>
-                                          <div class="col-lg-3 mb-3">
-                                            <h6 class="font-weight-bold text-uppercase">Home Decor</h6>
-                                            <ul class="list-unstyled">
-                                              <li class="nav-item row"><a href="" class="nav-link text-small pb-0">Unique Features</a></li>
-                                              <li class="nav-item row"><a href="" class="nav-link text-small pb-0 ">Image Responsive</a></li>
-                                              <li class="nav-item row"><a href="" class="nav-link text-small pb-0 ">Auto Carousel</a></li>
-                                              <li class="nav-item row"><a href="" class="nav-link text-small pb-0 ">Newsletter Form</a></li>
-                                            </ul>
-                                          </div> 
-                                          <div class="col-lg-3 mb-3">
-                                            <h6 class="font-weight-bold text-uppercase">Tribes Vandhan</h6>
-                                            <ul class="list-unstyled">
-                                              <li class="nav-item row"><a href="" class="nav-link text-small pb-0">Unique Features</a></li>
-                                              <li class="nav-item row"><a href="" class="nav-link text-small pb-0 ">Image Responsive</a></li>
-                                              <li class="nav-item row"><a href="" class="nav-link text-small pb-0 ">Auto Carousel</a></li>
-                                              <li class="nav-item row"><a href="" class="nav-link text-small pb-0 ">Newsletter Form</a></li>
-                                            </ul>
-                                          </div>
-                                          <div class="col-lg-3 mb-3">
-                                            <h6 class="font-weight-bold text-uppercase">Others</h6>
-                                            <ul class="list-unstyled">
-                                              <li class="nav-item row"><a href="" class="nav-link text-small pb-0">Metal Crafts</a></li>
-                                              <li class="nav-item row"><a href="" class="nav-link text-small pb-0 ">Crafts</a></li>
-                                              <li class="nav-item row"><a href="" class="nav-link text-small pb-0 ">Pooja Articles</a></li>
-                                              <li class="nav-item row"><a href="" class="nav-link text-small pb-0 ">assortments</a></li>
-                                            </ul>
-                                          </div>
-                                      </div>
-
-                                    </div>
-                                </div>
-                            </li>
-                        
-                    </ul>
-                </div>	
-
-                
-                <div class="wrap-icon-header flex-w flex-r-m">
-                    <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
-                        <i class="zmdi zmdi-search"></i>
-                    </div>
-
-                    <div class="icon-header-item cl2 mr-3 hov-cl1 trans-04 p-l-22 p-r-11">
-                        <i class="zmdi zmdi-shopping-cart"><a class="<%= path === '/' ? 'active' : '' %>" href="/cart">Cart</a></i>
-                    </div>
-                    <% if (!isAuthenticated) { %>
-                    <li class="mr-3">
-                        <a href="/login" style="color:black;font-size: 18px;" >Login</a>
-                    </li>
-                    <li class="mr-3">
-                        <a href="/signup" style="color:black;font-size: 18px;" >Signup</a>
-                    </li>
-                    <li class="mr-3">
-                        <a href="/about" style="color:black;font-size: 18px;" >About</a>
-                    </li>
-                    <% } else { %>
-                    <li class="main-header__item">
-                        <form action="/logout" method="post">
-                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                            <button type="submit" style="font-size: 18px;color:black;">Logout</button>
-                        </form>
-                    </li>
-                    <% } %>
-                </div>
-            </nav>
-        </div>	
-    </div>
-
-    
-    <div class="wrap-header-mobile">
-                
-        <div class="wrap-icon-header flex-w flex-r-m m-r-15">
-            <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 js-show-modal-search">
-                <i class="zmdi zmdi-search"></i>
-            </div>
-
-            <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart" data-notify="2">
-                <i class="zmdi zmdi-shopping-cart"></i>
-            </div>
-
-            <a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti" data-notify="0">
-                <i class="zmdi zmdi-favorite-outline"></i>
-            </a>
-        </div>
-
-        <div class="btn-show-menu-mobile hamburger hamburger--squeeze">
-            <span class="hamburger-box">
-                <span class="hamburger-inner"></span>
-            </span>
-        </div>
-    </div>
-
-
-    <div class="menu-mobile">
-        <ul class="main-menu-m">
-            <!-- <li>
-                <a href="index.html">Home</a>
-                <ul class="sub-menu-m">
-                    <li><a href="index.html">Homepage 1</a></li>
-                    <li><a href="home-02.html">Homepage 2</a></li>
-                    <li><a href="home-03.html">Homepage 3</a></li>
-                </ul>
-                <span class="arrow-main-menu-m">
-                    <i class="fa fa-angle-right" aria-hidden="true"></i>
-                </span>
-            </li> -->
-            <li>
+<div class="backdrop"></div>
+<header class="main-header">
+    <button id="side-menu-toggle">Menu</button>
+    <nav class="main-header__nav">
+        <ul class="main-header__item-list">
+            <li class="main-header__item">
                 <a class="<%= path === '/' ? 'active' : '' %>" href="/">Shop</a>
             </li>
-            <li>
+            <li class="main-header__item">
                 <a class="<%= path === '/products' ? 'active' : '' %>" href="/products">Products</a>
             </li>
             <% if (isAuthenticated) { %>
-                <li>
+                <li class="main-header__item">
                     <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
                 </li>
-                <li>
+                <li class="main-header__item">
                     <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a>
                 </li>
-                <li>
+                <li class="main-header__item">
                     <a class="<%= path === '/admin/add-product' ? 'active' : '' %>" href="/admin/add-product">Add Product
                     </a>
                 </li>
-                <li>
+                <li class="main-header__item">
                     <a class="<%= path === '/admin/products' ? 'active' : '' %>" href="/admin/products">Admin Products
                     </a>
                 </li>
             <% } %>
+        </ul>
+        <ul class="main-header__item-list">
             <% if (!isAuthenticated) { %>
-                <li>
+                <li class="main-header__item">
                     <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
                 </li>
-                <li>
+                <li class="main-header__item">
                     <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
                 </li>
             <% } else { %>
-                <li>
+                <li class="main-header__item">
                     <form action="/logout" method="post">
                         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <button type="submit">Logout</button>
@@ -236,21 +43,47 @@
                 </li>
             <% } %>
         </ul>
-    </div>
-
-    
-    <div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
-        <div class="container-search-header">
-            <button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
-                <img src="images/icons/icon-close2.png" alt="CLOSE">
-            </button>
-
-            <form class="wrap-search-header flex-w p-l-15">
-                <button class="flex-c-m trans-04">
-                    <i class="zmdi zmdi-search"></i>
-                </button>
-                <input class="plh3" type="text" name="search" placeholder="Search...">
-            </form>
-        </div>
-    </div>
+    </nav>
 </header>
+
+<nav class="mobile-nav">
+    <ul class="mobile-nav__item-list">
+        <li class="mobile-nav__item">
+            <a class="<%= path === '/' ? 'active' : '' %>" href="/">Shop</a>
+        </li>
+        <li class="mobile-nav__item">
+            <a class="<%= path === '/products' ? 'active' : '' %>" href="/products">Products</a>
+        </li>
+        <% if (isAuthenticated) { %>
+            <li class="mobile-nav__item">
+                <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
+            </li>
+            <li class="mobile-nav__item">
+                <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a>
+            </li>
+            <li class="mobile-nav__item">
+                <a class="<%= path === '/admin/add-product' ? 'active' : '' %>" href="/admin/add-product">Add Product
+                </a>
+            </li>
+            <li class="mobile-nav__item">
+                <a class="<%= path === '/admin/products' ? 'active' : '' %>" href="/admin/products">Admin Products
+                </a>
+            </li>
+        <% } %>
+        <% if (!isAuthenticated) { %>
+            <li class="mobile-nav__item">
+                <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
+            </li>
+            <li class="mobile-nav__item">
+                <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
+            </li>
+        <% } else { %>
+            <li class="mobile-nav__item">
+                <form action="/logout" method="post">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button type="submit">Logout</button>
+                </form>
+            </li>
+        <% } %>
+    </ul>
+</nav>
