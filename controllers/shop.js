@@ -6,7 +6,7 @@ const stripe = require('stripe')('sk_test_OaqA2gnJgKuAB9KWVsxQgDFt007w4zSW2b');
 
 const Product = require('../models/product');
 const Order = require('../models/order');
-
+const User = require('../models/user');
 const ITEMS_PER_PAGE = 2;
 
 exports.getProducts = (req, res, next) => {
@@ -56,6 +56,7 @@ exports.getProduct = (req, res, next) => {
       error.httpStatusCode = 500;
       return next(error);
     });
+  
 };
 
 exports.getIndex = (req, res, next) => {
@@ -262,12 +263,12 @@ exports.getInvoice = (req, res, next) => {
               ' - ' +
               prod.quantity +
               ' x ' +
-              '$' +
+              ' Rs. ' +
               prod.product.price
           );
       });
       pdfDoc.text('---');
-      pdfDoc.fontSize(20).text('Total Price: $' + totalPrice);
+      pdfDoc.fontSize(20).text('Total Price: Rs. ' + totalPrice);
 
       pdfDoc.end();
       // fs.readFile(invoicePath, (err, data) => {
@@ -287,3 +288,15 @@ exports.getInvoice = (req, res, next) => {
     })
     .catch(err => next(err));
 };
+
+exports.getSellerProfile = (req,res,next) => {
+    prodId = req.params.productId;
+    Product.findById(prodId)
+    .then(product => {
+      res.render('shop/seller_profile', {
+        path: '/seller',
+        pageTitle: 'Seller',
+        product: product
+      });
+    })
+}

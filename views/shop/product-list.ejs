@@ -19,12 +19,14 @@
                                     <img src="/<%= product.imageUrl %>" alt="<%= product.title %>">
                                 </div>
                                 <div class="card__content">
-                                    <h2 class="product__price">$
+                                    <h2 class="product__price">₹
                                         <%= product.price %>
                                     </h2>
                                     <p class="product__description">
                                         <%= product.description %>
                                     </p>
+                                    <p>Sold By: <a href="/seller/<%= product.userId %>"><%= product.email %></a></p>
+
                                 </div>
                                 <div class="card__actions">
                                     <a href="/products/<%= product._id %>" class="btn">Details</a>

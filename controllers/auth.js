@@ -281,3 +281,14 @@ exports.postNewPassword = (req, res, next) => {
       return next(error);
     });
 };
+
+exports.getProfile = (req, res, next) => {
+  User.findById(req.user._id).
+    then(user=>{
+      res.render('auth/profile', {
+        user: user,
+        pageTitle: 'Profile',
+        path: '/profile'
+      });
+    })
+}
