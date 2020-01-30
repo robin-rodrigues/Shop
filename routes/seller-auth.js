@@ -1,18 +1,18 @@
 const express = require('express');
 const { check, body } = require('express-validator');
 
-const authController = require('../controllers/auth');
-const User = require('../models/user');
-const isAuth = require('../middleware/is-auth');
+const sellerController = require('../controllers/seller-auth');
+const Seller = require('../models/seller');
+const isSellerAuth = require('../middleware/is-seller-auth');
 
 const router = express.Router();
 
-router.get('/login', authController.getLogin);
+router.get('/seller-login', sellerController.getLogin);
 
-router.get('/signup', authController.getSignup);
+router.get('/seller-signup', sellerController.getSignup);
 
 router.post(
-  '/login',
+  '/seller-login',
   [
     body('email')
       .isEmail()
@@ -23,11 +23,11 @@ router.post(
       .isAlphanumeric()
       .trim()
   ],
-  authController.postLogin
+  sellerController.postLogin
 );
 
 router.post(
-  '/signup',
+  '/seller-signup',
   [
     check('email')
       .isEmail()
@@ -37,8 +37,8 @@ router.post(
         //   throw new Error('This email address if forbidden.');
         // }
         // return true;
-        return User.findOne({ email: value }).then(userDoc => {
-          if (userDoc) {
+        return Seller.findOne({ email: value }).then(sellerDoc => {
+          if (sellerDoc) {
             return Promise.reject(
               'E-Mail exists already, please pick a different one.'
             );
@@ -62,19 +62,19 @@ router.post(
         return true;
       })
   ],
-  authController.postSignup
+  sellerController.postSignup
 );
 
-router.post('/logout', authController.postLogout);
+router.post('/seller-logout', sellerController.postLogout);
 
-router.get('/reset', authController.getReset);
+router.get('/seller-reset', sellerController.getReset);
 
-router.post('/reset', authController.postReset);
+router.post('/seller-reset', sellerController.postReset);
 
-router.get('/reset/:token', authController.getNewPassword);
+router.get('/seller-reset/:token', sellerController.getNewPassword);
 
-router.post('/new-password', authController.postNewPassword);
+router.post('/seller-new-password', sellerController.postNewPassword);
 
-router.get('/profile', isAuth, authController.getProfile);
+router.get('/seller-profile', isSellerAuth, sellerController.getProfile);
 
 module.exports = router;

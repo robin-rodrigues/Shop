@@ -63,8 +63,8 @@ exports.postAddProduct = (req, res, next) => {
     price: price,
     description: description,
     imageUrl: imageUrl,
-    userId: req.user,
-    email: req.user.email
+    sellerId: req.seller,
+    email: req.seller.email
   });
   product
     .save()
@@ -151,7 +151,7 @@ exports.postEditProduct = (req, res, next) => {
 
   Product.findById(prodId)
     .then(product => {
-      if (product.userId.toString() !== req.user._id.toString()) {
+      if (product.sellerId.toString() !== req.seller._id.toString()) {
         return res.redirect('/');
       }
       product.title = updatedTitle;
@@ -174,7 +174,7 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-  Product.find({ userId: req.user._id })
+  Product.find({ sellerId: req.seller._id })
     // .select('title price -_id')
     // .populate('userId', 'name')
     .then(products => {
@@ -200,7 +200,7 @@ exports.deleteProduct = (req, res, next) => {
         return next(new Error('Product not found.'));
       }
       fileHelper.deleteFile(product.imageUrl);
-      return Product.deleteOne({ _id: prodId, userId: req.user._id });
+      return Product.deleteOne({ _id: prodId, sellerId: req.seller._id });
     })
     .then(() => {
       console.log('DESTROYED PRODUCT');

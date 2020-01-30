@@ -19,14 +19,14 @@ const productSchema = new Schema({
     type: String,
     required: true
   },
-  userId: {
+  sellerId: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'Seller',
     required: true
   },
   email: {
     type: String,
-    ref: 'User',
+    ref: 'Seller',
     required: true
   }
 });

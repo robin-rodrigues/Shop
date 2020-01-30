@@ -15,11 +15,12 @@ const errorController = require('./controllers/error');
 const shopController = require('./controllers/shop');
 const isAuth = require('./middleware/is-auth');
 const User = require('./models/user');
+const Seller = require('./models/seller');
 
 
 const app = express();
 const store = new MongoDBStore({
-  uri: process.env.CLOUD_MONGODB_PATH,
+  uri: "mongodb+srv://robin:NfokFKb9SGnBHnBv@cluster0-dy75c.mongodb.net/test?retryWrites=true&w=majority",
   collection: 'sessions'
 });
 const csrfProtection = csrf();
@@ -52,6 +53,8 @@ app.set('views', 'views');
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
+const sellerAuthRoutes = require('./routes/seller-auth');
+
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
@@ -72,6 +75,7 @@ app.use(flash());
 
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.session.isLoggedIn;
+  res.locals.isSellerAuthenticated = req.session.isSellerLoggedIn;
   next();
 });
 
@@ -93,6 +97,24 @@ app.use((req, res, next) => {
     });
 });
 
+app.use((req, res, next) => {
+  // throw new Error('Sync Dummy');
+  if (!req.session.seller) {
+    return next();
+  }
+  Seller.findById(req.session.seller._id)
+    .then(seller => {
+      if (!seller) {
+        return next();
+      }
+      req.seller = seller;
+      next();
+    })
+    .catch(err => {
+      next(new Error(err));
+    });
+});
+
 app.post('/create-order', isAuth, shopController.postOrder);
 
 app.use(csrfProtection);
@@ -104,6 +126,7 @@ app.use((req, res, next) => {
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes);
+app.use(sellerAuthRoutes);
 
 app.get('/500', errorController.get500);
 
@@ -121,7 +144,7 @@ app.use(errorController.get404);
 
 
 mongoose
-  .connect(process.env.CLOUD_MONGODB_PATH,{useNewUrlParser: true, useUnifiedTopology: true})
+  .connect("mongodb+srv://robin:NfokFKb9SGnBHnBv@cluster0-dy75c.mongodb.net/test?retryWrites=true&w=majority",{useNewUrlParser: true, useUnifiedTopology: true})
   .then(result => {
     app.listen(3000);
   })

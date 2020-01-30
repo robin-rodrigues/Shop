@@ -7,6 +7,8 @@ const stripe = require('stripe')('sk_test_OaqA2gnJgKuAB9KWVsxQgDFt007w4zSW2b');
 const Product = require('../models/product');
 const Order = require('../models/order');
 const User = require('../models/user');
+// const Notification = require('../models/notification');
+
 const ITEMS_PER_PAGE = 2;
 
 exports.getProducts = (req, res, next) => {
@@ -118,7 +120,7 @@ exports.postCart = (req, res, next) => {
     })
     .then(result => {
       console.log(result);
-      res.redirect('/cart');
+      res.redirect('/');
     })
     .catch(err => {
       const error = new Error(err);
@@ -189,6 +191,13 @@ exports.postOrder = (req, res, next) => {
         },
         products: products
       });
+      // const notification = new Notification({
+      //   user: {
+      //     email: req.user.email,
+      //     userId: req.user
+      //   },
+      //   products: products
+      // });
       return order.save();
     })
     .then(result => {
@@ -300,3 +309,20 @@ exports.getSellerProfile = (req,res,next) => {
       });
     })
 }
+
+// exports.getNotifications  = (req, res, next) => {
+//   Order.find({ '5e0ccc412916188158bf633d': req.user._id })
+//     .then(notifications => {
+//       console.log(notifications);
+//       res.render('shop/notifications', {
+//         path: '/notifications',
+//         pageTitle: 'Your Notifications',
+//         notifications: notifications
+//       });
+//     })
+//     .catch(err => {
+//       const error = new Error(err);
+//       error.httpStatusCode = 500;
+//       return next(error);
+//     });
+// };

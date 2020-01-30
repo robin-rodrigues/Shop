@@ -4,15 +4,15 @@ const express = require('express');
 const { body } = require('express-validator/check');
 
 const adminController = require('../controllers/admin');
-const isAuth = require('../middleware/is-auth');
+const isSellerAuth = require('../middleware/is-seller-auth');
 
 const router = express.Router();
 
 // /admin/add-product => GET
-router.get('/add-product', isAuth, adminController.getAddProduct);
+router.get('/add-product', isSellerAuth, adminController.getAddProduct);
 
 // /admin/products => GET
-router.get('/products', isAuth, adminController.getProducts);
+router.get('/products', isSellerAuth, adminController.getProducts);
 
 // /admin/add-product => POST
 router.post(
@@ -27,11 +27,11 @@ router.post(
       .isLength({ min: 5, max: 400 })
       .trim()
   ],
-  isAuth,
+  isSellerAuth,
   adminController.postAddProduct
 );
 
-router.get('/edit-product/:productId', isAuth, adminController.getEditProduct);
+router.get('/edit-product/:productId', isSellerAuth, adminController.getEditProduct);
 
 router.post(
   '/edit-product',
@@ -45,10 +45,10 @@ router.post(
       .isLength({ min: 5, max: 400 })
       .trim()
   ],
-  isAuth,
+  isSellerAuth,
   adminController.postEditProduct
 );
 
-router.delete('/product/:productId', isAuth, adminController.deleteProduct);
+router.delete('/product/:productId', isSellerAuth, adminController.deleteProduct);
 
 module.exports = router;

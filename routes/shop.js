@@ -4,7 +4,6 @@ const express = require('express');
 
 const shopController = require('../controllers/shop');
 const isAuth = require('../middleware/is-auth');
-
 const router = express.Router();
 
 router.get('/', shopController.getIndex);
@@ -26,5 +25,7 @@ router.get('/orders', isAuth, shopController.getOrders);
 router.get('/orders/:orderId', isAuth, shopController.getInvoice);
 
 router.get('/seller/:sellerId', shopController.getSellerProfile);
+
+// router.get('/notifications', isAuth, shopController.getNotifications);
 
 module.exports = router;

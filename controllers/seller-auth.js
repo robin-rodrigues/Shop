@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const crypto = require('crypto');
 
 const bcrypt = require('bcryptjs');
@@ -5,12 +7,12 @@ const nodemailer = require('nodemailer');
 const sendgridTransport = require('nodemailer-sendgrid-transport');
 const { validationResult } = require('express-validator');
 
-const User = require('../models/user');
+const Seller = require('../models/seller');
 
 const transporter = nodemailer.createTransport(
   sendgridTransport({
     auth: {
-      api_key: "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"
+      api_key: "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"
       }
   })
 );
@@ -22,9 +24,9 @@ exports.getLogin = (req, res, next) => {
   } else {
     message = null;
   }
-  res.render('auth/login', {
-    path: '/login',
-    pageTitle: 'Login',
+  res.render('seller-auth/login', {
+    path: '/seller-login',
+    pageTitle: 'Seller Login',
     errorMessage: message,
     oldInput: {
       email: '',
@@ -41,9 +43,9 @@ exports.getSignup = (req, res, next) => {
   } else {
     message = null;
   }
-  res.render('auth/signup', {
-    path: '/signup',
-    pageTitle: 'Signup',
+  res.render('seller-auth/signup', {
+    path: '/seller-signup',
+    pageTitle: 'Seller Signup',
     errorMessage: message,
     oldInput: {
       email: '',
@@ -60,9 +62,9 @@ exports.postLogin = (req, res, next) => {
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(422).render('auth/login', {
-      path: '/login',
-      pageTitle: 'Login',
+    return res.status(422).render('seller-auth/login', {
+      path: '/seller-login',
+      pageTitle: 'Seller Login',
       errorMessage: errors.array()[0].msg,
       oldInput: {
         email: email,
@@ -72,12 +74,12 @@ exports.postLogin = (req, res, next) => {
     });
   }
 
-  User.findOne({ email: email })
-    .then(user => {
-      if (!user) {
-        return res.status(422).render('auth/login', {
-          path: '/login',
-          pageTitle: 'Login',
+  Seller.findOne({ email: email })
+    .then(seller => {
+      if (!seller) {
+        return res.status(422).render('seller-auth/login', {
+          path: '/seller-login',
+          pageTitle: 'Seller Login',
           errorMessage: 'Invalid email or password.',
           oldInput: {
             email: email,
@@ -87,19 +89,20 @@ exports.postLogin = (req, res, next) => {
         });
       }
       bcrypt
-        .compare(password, user.password)
+        .compare(password, seller.password)
         .then(doMatch => {
           if (doMatch) {
-            req.session.isLoggedIn = true;
-            req.session.user = user;
+            req.session.isLoggedIn = false;
+            req.session.isSellerLoggedIn = true;
+            req.session.seller = seller;
             return req.session.save(err => {
               console.log(err);
               res.redirect('/');
             });
           }
-          return res.status(422).render('auth/login', {
-            path: '/login',
-            pageTitle: 'Login',
+          return res.status(422).render('seller-auth/login', {
+            path: '/seller-login',
+            pageTitle: 'Seller Login',
             errorMessage: 'Invalid email or password.',
             oldInput: {
               email: email,
@@ -110,7 +113,7 @@ exports.postLogin = (req, res, next) => {
         })
         .catch(err => {
           console.log(err);
-          res.redirect('/login');
+          res.redirect('/seller-login');
         });
     })
     .catch(err => {
@@ -127,9 +130,9 @@ exports.postSignup = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log(errors.array());
-    return res.status(422).render('auth/signup', {
-      path: '/signup',
-      pageTitle: 'Signup',
+    return res.status(422).render('seller-auth/signup', {
+      path: '/seller-signup',
+      pageTitle: 'Seller Signup',
       errorMessage: errors.array()[0].msg,
       oldInput: {
         email: email,
@@ -143,15 +146,14 @@ exports.postSignup = (req, res, next) => {
   bcrypt
     .hash(password, 12)
     .then(hashedPassword => {
-      const user = new User({
+      const seller = new Seller({
         email: email,
         password: hashedPassword,
-        cart: { items: [] }
       });
-      return user.save();
+      return seller.save();
     })
     .then(result => {
-      res.redirect('/login');
+      res.redirect('/seller-login');
       return transporter.sendMail({
         to: email,
         from: 'shop@node-complete.com',
@@ -180,8 +182,8 @@ exports.getReset = (req, res, next) => {
   } else {
     message = null;
   }
-  res.render('auth/reset', {
-    path: '/reset',
+  res.render('seller-auth/reset', {
+    path: '/seller-reset',
     pageTitle: 'Reset Password',
     errorMessage: message
   });
@@ -191,18 +193,18 @@ exports.postReset = (req, res, next) => {
   crypto.randomBytes(32, (err, buffer) => {
     if (err) {
       console.log(err);
-      return res.redirect('/reset');
+      return res.redirect('/seller-reset');
     }
     const token = buffer.toString('hex');
-    User.findOne({ email: req.body.email })
-      .then(user => {
-        if (!user) {
+    Seller.findOne({ email: req.body.email })
+      .then(seller => {
+        if (!seller) {
           req.flash('error', 'No account with that email found.');
-          return res.redirect('/reset');
+          return res.redirect('/seller-reset');
         }
-        user.resetToken = token;
-        user.resetTokenExpiration = Date.now() + 3600000;
-        return user.save();
+        seller.resetToken = token;
+        seller.resetTokenExpiration = Date.now() + 3600000;
+        return seller.save();
       })
       .then(result => {
         res.redirect('/');
@@ -226,19 +228,19 @@ exports.postReset = (req, res, next) => {
 
 exports.getNewPassword = (req, res, next) => {
   const token = req.params.token;
-  User.findOne({ resetToken: token, resetTokenExpiration: { $gt: Date.now() } })
-    .then(user => {
+  Seller.findOne({ resetToken: token, resetTokenExpiration: { $gt: Date.now() } })
+    .then(seller => {
       let message = req.flash('error');
       if (message.length > 0) {
         message = message[0];
       } else {
         message = null;
       }
-      res.render('auth/new-password', {
-        path: '/new-password',
+      res.render('seller-auth/new-password', {
+        path: '/seller-new-password',
         pageTitle: 'New Password',
         errorMessage: message,
-        userId: user._id.toString(),
+        sellerId: seller._id.toString(),
         passwordToken: token
       });
     })
@@ -251,27 +253,27 @@ exports.getNewPassword = (req, res, next) => {
 
 exports.postNewPassword = (req, res, next) => {
   const newPassword = req.body.password;
-  const userId = req.body.userId;
+  const sellerId = req.body.sellerId;
   const passwordToken = req.body.passwordToken;
-  let resetUser;
+  let resetSeller;
 
-  User.findOne({
+  Seller.findOne({
     resetToken: passwordToken,
     resetTokenExpiration: { $gt: Date.now() },
-    _id: userId
+    _id: sellerId
   })
-    .then(user => {
-      resetUser = user;
+    .then(seller => {
+      resetSeller = seller;
       return bcrypt.hash(newPassword, 12);
     })
     .then(hashedPassword => {
-      resetUser.password = hashedPassword;
-      resetUser.resetToken = undefined;
-      resetUser.resetTokenExpiration = undefined;
-      return resetUser.save();
+      resetSeller.password = hashedPassword;
+      resetSeller.resetToken = undefined;
+      resetSeller.resetTokenExpiration = undefined;
+      return resetSeller.save();
     })
     .then(result => {
-      res.redirect('/login');
+      res.redirect('/seller-login');
     })
     .catch(err => {
       const error = new Error(err);
@@ -281,12 +283,12 @@ exports.postNewPassword = (req, res, next) => {
 };
 
 exports.getProfile = (req, res, next) => {
-  User.findById(req.user._id).
-    then(user=>{
-      res.render('auth/profile', {
-        user: user,
-        pageTitle: 'Profile',
-        path: '/profile'
+  Seller.findById(req.seller._id).
+    then(seller=>{
+      res.render('seller-auth/profile', {
+        seller: seller,
+        pageTitle: 'Seller Profile',
+        path: '/seller-profile'
       });
     })
 }
